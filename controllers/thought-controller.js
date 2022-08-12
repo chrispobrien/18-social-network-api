@@ -85,7 +85,7 @@ const thoughtController = {
                     return;
                 }
                 // Now delete this thought from the user
-                User.findOneAndUpdate({ thoughts: params.id })
+                User.findOneAndUpdate({ thoughts: params.id }, { $pull: {thoughts: params.id} })
                 .then(dbUserData => console.log(`Removed thought from ${dbUserData.username}`))
                 .catch(err => console.log(err));
                 res.json(dbThoughtData);
@@ -96,8 +96,8 @@ const thoughtController = {
     // add a reaction to a thought
     addReaction({ params, body}, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id },
-            { $push: { reactions: body } },
+            { _id: params.thoughtId },
+            { $addToSet: { reactions: body } },
             { new: true }
         )
         .then(dbThoughtData => {
@@ -116,8 +116,8 @@ const thoughtController = {
     // delete a reaction by reactionId
     deleteReaction({ params }, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id },
-            { $pull: { reactions: params.reactionId }},
+            { _id: params.thoughtId },
+            { $pull: { reactions: { reactionId: params.reactionId } }},
             { new: true }
         )
         .then(dbThoughtData => {

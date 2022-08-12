@@ -1,5 +1,5 @@
 // Use mongoose package for NoSQL database acccess
-const { Schema } = require('mongoose');
+const { Schema, Types } = require('mongoose');
 // Use package moment for date formatting
 const moment = require('moment');
 
@@ -7,7 +7,7 @@ const moment = require('moment');
 const ReactionSchema = Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
-        default: () => new Schema.Types.ObjectId()
+        default: () => new Types.ObjectId()
     },
     reactionBody: {
         type: String,
@@ -30,7 +30,8 @@ const ReactionSchema = Schema({
     toJSON: {
         getters: true
     },
-    //id: false
+    id: false,
+    _id: false
 });
 
 module.exports = ReactionSchema;
