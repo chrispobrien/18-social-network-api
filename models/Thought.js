@@ -1,6 +1,6 @@
 // Use mongoose package for NoSQL database acccess
 const { Schema, model} = require('mongoose');
-// Reactions
+// Reactions are an array of nested documents in Thought with this schema
 const ReactionSchema = require('./Reaction');
 // Use package moment for date formatting
 const moment = require('moment');
@@ -22,7 +22,7 @@ const ThoughtSchema = Schema({
         type: String,
         required: 'Please supply a user name!'
     },
-    // an array of nested documents of type reactions
+    // an array of nested documents with schema of ReactionSchema
     reactions: [ ReactionSchema ],
 },
 {
