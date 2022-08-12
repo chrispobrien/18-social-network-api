@@ -45,6 +45,7 @@ const thoughtController = {
             .then(dbThoughtData => {
                 // add thought to user's thoughts array
                 User.findOneAndUpdate({ _id: body.userId }, { $push: { thoughts: dbThoughtData._id }})
+                .then(res.json(dbThoughtData))
                 .catch(err => {
                     console.log(err);
                     res.status(500).json(err);
@@ -83,6 +84,10 @@ const thoughtController = {
                     res.status(404).json({ message: 'No thought found with this id!' });
                     return;
                 }
+                // Now delete this thought from the user
+                User.findOneAndUpdate({ thoughts: params.id })
+                .then(dbUserData => console.log(`Removed thought from ${dbUserData.username}`))
+                .catch(err => console.log(err));
                 res.json(dbThoughtData);
             })
             .catch(err => res.status(500).json(err));
