@@ -92,7 +92,7 @@ const thoughtController = {
     addReaction({ params, body}, res) {
         Thought.findOneAndUpdate(
             { _id: params.id },
-            { $push: { reactions: { reactionBody: body.reactionBody, username: body.username } } },
+            { $push: { reactions: body } },
             { new: true }
         )
         .then(dbThoughtData => {
