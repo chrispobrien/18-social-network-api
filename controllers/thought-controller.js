@@ -86,7 +86,11 @@ const thoughtController = {
                 }
                 // Now delete this thought from the user
                 User.findOneAndUpdate({ thoughts: params.id }, { $pull: {thoughts: params.id} })
-                .then(dbUserData => console.log(`Removed thought from ${dbUserData.username}`))
+                .then(dbUserData => {
+                    if (dbUserData) {
+                        console.log(`Removed thought from ${dbUserData.username}`)
+                    }
+                })
                 .catch(err => console.log(err));
                 res.json(dbThoughtData);
             })

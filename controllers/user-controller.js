@@ -88,9 +88,13 @@ const userController = {
                     return;
                 }
                 // delete all Thoughts with this username
-                dbUserData.thoughts.map(id => Thought.findOneAndDelete({ _id: id}));
-                // just in case - don't use this
-                // Thought.deleteMany({ username: dbUserData.username });
+                dbUserData.thoughts.map(id => {
+                    Thought.findOneAndDelete({ _id: id })
+                    .then(dbThoughtData => {
+                        console.log(`Deleted associated thought ${dbThoughtData._id}`);
+                    })
+                    .catch(err => console.log(err));
+                });
                 res.json(dbUserData);
             })
             .catch(err => res.status(500).json(err));
