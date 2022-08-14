@@ -14,8 +14,6 @@ Uses the following node packages:
 
 Mongoose provides an object-relational mapping (ORM) framework for MongoDB.
 
-## Getting started
-
 ![Tutorial][screenshot-01]
 
 ## Installation
